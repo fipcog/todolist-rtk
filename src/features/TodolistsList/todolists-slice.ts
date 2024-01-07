@@ -4,6 +4,7 @@ import {RequestStatusType, appActions} from '../../app/app-slice'
 import {handleServerNetworkError} from '../../utils/error-utils'
 import { AppThunk } from '../../app/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { authActions } from 'features/Login/auth-slice';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistDomainType = TodolistType & {
@@ -45,6 +46,14 @@ const slice = createSlice({
         setTodolists: (state, action: PayloadAction<{todolists: Array<TodolistType>}>) => {
             return action.payload.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(authActions.setIsLoggedIn, (state, action) => {
+                if(!action.payload.isLoggedin) {
+                    return []
+                }
+            })
     }
 })
 

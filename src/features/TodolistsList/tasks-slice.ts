@@ -5,6 +5,7 @@ import {AppRootStateType} from '../../app/store'
 import {appActions} from '../../app/app-slice'
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { authActions } from 'features/Login/auth-slice'
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -53,6 +54,11 @@ const slice = createSlice({
             })
             .addCase(todolistActions.setTodolists, (state, action) => {
                 action.payload.todolists.forEach(tl => state[tl.id] = [])
+            })
+            .addCase(authActions.setIsLoggedIn, (state, action) => {
+                if(!action.payload.isLoggedin) {
+                    return {}
+                }
             })
     }
 })
