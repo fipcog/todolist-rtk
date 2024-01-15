@@ -1,8 +1,9 @@
 import { Dispatch } from 'redux'
 import { appActions } from '../../app/app-slice'
-import { handleServerAppError, handleServerNetworkError } from '../../common/utils/error-utils'
+import { handleServerAppError } from '../../common/utils/handleServerAppError'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { LoginParamsType, authAPI } from 'api/login-api'
+import { handleServerNetworkError } from 'common/utils/handleServerNetworkError'
 
 const slice = createSlice({
     name: 'auth',
