@@ -3,7 +3,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelTyp
 import {Dispatch} from 'redux'
 import {AppRootStateType} from '../../app/store'
 import {appActions} from '../../app/app-slice'
-import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils'
+import {handleServerAppError, handleServerNetworkError} from '../../common/utils/error-utils'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { authActions } from 'features/Login/auth-slice'
 
