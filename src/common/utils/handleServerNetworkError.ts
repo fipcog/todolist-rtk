@@ -2,6 +2,12 @@ import { appActions } from "app/app-slice";
 import { AppDispatch } from "app/store";
 import axios from "axios";
 
+
+/**
+ * 
+ * @param err - description
+ * @param dispatch - description
+ */
 export const handleServerNetworkError = (err: unknown, dispatch: AppDispatch): void => {
     let errorMessage = "Some error occurred";
 
