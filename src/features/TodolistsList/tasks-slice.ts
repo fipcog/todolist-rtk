@@ -5,7 +5,7 @@ import { AppRootStateType } from '../../app/store'
 import { appActions } from '../../app/app-slice'
 import { handleServerAppError } from '../../common/utils/handleServerAppError'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { authActions } from 'features/Login/auth-slice'
+import { authActions, login } from 'features/Login/auth-slice'
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError'
 import { createAsyncAppThunk } from 'common/instances/createAsyncAppThunk'
 
@@ -37,7 +37,7 @@ const slice = createSlice({
             .addCase(todolistThunks.fetchTodolists.fulfilled, (state, action) => {
                 action.payload.todolists.forEach(tl => state[tl.id] = [])
             })
-            .addCase(authActions.setIsLoggedIn, (state, action) => {
+            .addCase(login.fulfilled, (state, action) => {
                 if (!action.payload.isLoggedin) {
                     return {}
                 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
-import { loginTC } from './auth-slice'
+import { login } from './auth-slice'
 import { AppRootStateType } from '../../app/store'
 import { Navigate } from 'react-router-dom'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch';
@@ -32,7 +32,7 @@ export const Login = () => {
             rememberMe: false
         },
         onSubmit: values => {
-            dispatch(loginTC(values));
+            dispatch(login(values));
         },
     })
 
@@ -48,7 +48,7 @@ export const Login = () => {
                     <FormLabel>
                         <p>
                             To log in get registered <a href={'https://social-network.samuraijs.com/'}
-                                                        target={'_blank'}>here</a>
+                                target={'_blank'}>here</a>
                         </p>
                         <p>
                             or use common test account credentials:

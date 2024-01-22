@@ -3,7 +3,7 @@ import { Dispatch } from 'redux'
 import { RequestStatusType, appActions } from '../../app/app-slice'
 import { AppThunk } from '../../app/store';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { authActions } from 'features/Login/auth-slice';
+import { authActions, login } from 'features/Login/auth-slice';
 import { createAsyncAppThunk } from 'common/instances/createAsyncAppThunk';
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError';
 
@@ -32,7 +32,7 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(authActions.setIsLoggedIn, (state, action) => {
+            .addCase(login.fulfilled, (state, action) => {
                 if (!action.payload.isLoggedin) {
                     return []
                 }
