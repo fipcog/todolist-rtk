@@ -4,9 +4,9 @@ import axios from "axios";
 
 
 /**
- * 
- * @param err - description
- * @param dispatch - description
+ *  util resolve network errors of response and dispatch setAppError and setAppStatus actions
+ * @param err - error of unknown type wich type will be fownd out inside
+ * @param dispatch - stors dispatch of type AppDispatch
  */
 export const handleServerNetworkError = (err: unknown, dispatch: AppDispatch): void => {
     let errorMessage = "Some error occurred";
