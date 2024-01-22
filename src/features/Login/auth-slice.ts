@@ -19,7 +19,7 @@ const slice = createSlice({
                 state.isLoggedIn = action.payload.isLoggedin
             })
             .addCase(initializeApp.fulfilled, (state, action) => {
-                state.isLoggedIn = true
+                state.isLoggedIn = action.payload.isLoggedIn
             })
             .addCase(logout.fulfilled, (state, action) => {
                 state.isLoggedIn = action.payload.isLoggedin
@@ -39,8 +39,8 @@ export const login = createAsyncAppThunk<{ isLoggedin: boolean }, LoginParamsTyp
                 dispatch(appActions.setAppStatus({ status: 'succeeded' }))
                 return { isLoggedin: true }
             } else {
-                handleServerAppError(res.data, dispatch)
-                return rejectWithValue(null)
+                handleServerAppError(res.data, dispatch, false)
+                return rejectWithValue(res.data)
             }
         } catch (e: unknown) {
             handleServerNetworkError(e, dispatch)

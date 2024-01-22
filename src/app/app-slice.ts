@@ -33,16 +33,19 @@ const slice = createSlice({
 
 
 
-export const initializeApp = createAsyncAppThunk<{ isInitialized: boolean }, undefined>(
+export const initializeApp = createAsyncAppThunk<{ isInitialized: boolean, isLoggedIn: boolean }, undefined>(
     'app/initializeApp',
     async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
-        try {
-            await authAPI.me()
-        } finally {
-            return { isInitialized: true }
+
+        const res = await authAPI.me()
+        if (res.data.resultCode !== 0) {
+            return { isInitialized: true, isLoggedIn: false }
+        } else {
+            return { isLoggedIn: true, isInitialized: true }
         }
     }
+
 )
 
 

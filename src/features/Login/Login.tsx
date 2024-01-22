@@ -6,6 +6,7 @@ import { AppRootStateType } from '../../app/store'
 import { Navigate } from 'react-router-dom'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch';
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from '@mui/material'
+import { ResponseType } from 'api/todolists-api';
 
 export const Login = () => {
     const dispatch = useAppDispatch()
@@ -31,8 +32,15 @@ export const Login = () => {
             password: '',
             rememberMe: false
         },
-        onSubmit: values => {
-            dispatch(login(values));
+        onSubmit: (values, formikHelpers) => {
+            dispatch(login(values)).unwrap().catch((data: ResponseType) => {
+                if (data.fieldsErrors.length) {
+                    data.fieldsErrors.forEach(err => formikHelpers.setFieldError(err.field, err.error))
+                }
+                if (!data.fieldsErrors.length && data.messages) {
+                    formikHelpers.setFieldError('password', data.messages[0])
+                }
+            })
         },
     })
 
@@ -65,14 +73,14 @@ export const Login = () => {
                             margin="normal"
                             {...formik.getFieldProps("email")}
                         />
-                        {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                        {formik.errors.email && <div style={{ color: 'red' }}>{formik.errors.email}</div>}
                         <TextField
                             type="password"
                             label="Password"
                             margin="normal"
                             {...formik.getFieldProps("password")}
                         />
-                        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                        {formik.errors.password && <div style={{ color: 'red' }}>{formik.errors.password}</div>}
                         <FormControlLabel
                             label={'Remember me'}
                             control={<Checkbox
