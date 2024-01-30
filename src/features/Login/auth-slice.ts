@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { appActions, initializeApp } from '../../app/app-slice'
 import { handleServerAppError } from '../../common/utils/handleServerAppError'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, isFulfilled, PayloadAction } from '@reduxjs/toolkit'
 import { LoginParamsType, authAPI } from 'api/login-api'
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError'
 import { createAsyncAppThunk } from 'common/instances/createAsyncAppThunk'
@@ -15,14 +15,11 @@ const slice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(login.fulfilled, (state, action) => {
-                state.isLoggedIn = action.payload.isLoggedin
+            .addMatcher(isFulfilled(login, initializeApp), (state, action) => {
+                state.isLoggedIn = true
             })
-            .addCase(initializeApp.fulfilled, (state, action) => {
-                state.isLoggedIn = action.payload.isLoggedIn
-            })
-            .addCase(logout.fulfilled, (state, action) => {
-                state.isLoggedIn = action.payload.isLoggedin
+            .addMatcher(isFulfilled(logout), (state, action) => {
+                state.isLoggedIn = false
             })
     }
 })
@@ -33,10 +30,8 @@ export const login = createAsyncAppThunk<{ isLoggedin: boolean }, LoginParamsTyp
     async (data, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
         try {
-            dispatch(appActions.setAppStatus({ status: 'loading' }))
             const res = await authAPI.login(data)
             if (res.data.resultCode === 0) {
-                dispatch(appActions.setAppStatus({ status: 'succeeded' }))
                 return { isLoggedin: true }
             } else {
                 handleServerAppError(res.data, dispatch, false)
@@ -54,10 +49,8 @@ export const logout = createAsyncAppThunk<{ isLoggedin: boolean }, undefined>(
     async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
         try {
-            dispatch(appActions.setAppStatus({ status: 'loading' }))
             const res = await authAPI.logout()
             if (res.data.resultCode === 0) {
-                dispatch(appActions.setAppStatus({ status: 'succeeded' }))
                 return { isLoggedin: false }
             } else {
                 handleServerAppError(res.data, dispatch)

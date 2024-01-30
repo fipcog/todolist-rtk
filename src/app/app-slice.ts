@@ -1,6 +1,6 @@
-import { Dispatch } from 'redux'
+import { AnyAction, Dispatch, UnknownAction } from 'redux'
 import { authActions } from '../features/Login/auth-slice'
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice, isAnyOf, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit'
 import { authAPI } from 'api/login-api'
 import { createAsyncAppThunk } from 'common/instances/createAsyncAppThunk'
 
@@ -15,17 +15,31 @@ const slice = createSlice({
         isInitialized: false as boolean
     },
     reducers: {
-        setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
-            state.status = action.payload.status
-        },
+        // setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
+        //     state.status = action.payload.status
+        // },
         setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
             state.error = action.payload.error
         },
     },
     extraReducers: builder => {
         builder
-            .addCase(initializeApp.fulfilled, (state, action) => {
-                state.isInitialized = action.payload.isInitialized
+            .addMatcher(isAnyOf(initializeApp.fulfilled, initializeApp.rejected), (state, action) => {
+                state.isInitialized = true
+            })
+            .addMatcher(isPending, (state) => {
+                state.status = 'loading'
+            })
+            .addMatcher(isFulfilled, (state) => {
+                state.status = 'succeeded'
+            })
+            .addMatcher(isRejected, (state, action: AnyAction) => {
+                state.status = 'failed'
+                // if (action.payload) {
+                //     state.error = action.payload.messages[0]
+                // } else {
+                //     state.error = action.error.message ? action.error.message : 'Some error occurred'
+                // }
             })
     }
 })
@@ -33,16 +47,16 @@ const slice = createSlice({
 
 
 
-export const initializeApp = createAsyncAppThunk<{ isInitialized: boolean, isLoggedIn: boolean }, undefined>(
+export const initializeApp = createAsyncAppThunk<{ isInitialized: boolean }, undefined>(
     'app/initializeApp',
     async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
 
         const res = await authAPI.me()
-        if (res.data.resultCode !== 0) {
-            return { isInitialized: true, isLoggedIn: false }
+        if (res.data.resultCode === 0) {
+            return { isInitialized: true }
         } else {
-            return { isLoggedIn: true, isInitialized: true }
+            return rejectWithValue(res.data)
         }
     }
 
