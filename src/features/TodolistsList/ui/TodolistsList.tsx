@@ -1,19 +1,19 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { AppRootStateType } from '../../app/store'
+import { AppRootStateType } from '../../../app/store'
 import {
     todolistActions,
     FilterValuesType,
     TodolistDomainType,
     todolistThunks
-} from './todolists-slice'
-import { TasksStateType, tasksThunks } from './tasks-slice'
-import { TaskStatuses } from '../../api/todolists-api'
+} from '../Todolist/model/todolists-slice'
+import { TasksStateType, tasksThunks } from '../Todolist/Task/model/tasks-slice'
+import { TaskStatuses } from '../../../api/todolists-api'
 import { Grid, Paper } from '@mui/material'
-import { AddItemForm } from '../../common/components/AddItemForm/AddItemForm'
-import { Todolist } from './Todolist/Todolist'
+import { AddItemForm } from '../../../common/components/AddItemForm/AddItemForm'
+import { Todolist } from '../Todolist/ui/Todolist'
 import { Navigate } from 'react-router-dom'
-import { useAppDispatch } from '../../common/hooks/useAppDispatch';
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch';
 
 type PropsType = {
     demo?: boolean

@@ -1,9 +1,9 @@
-import { todolistsAPI, TodolistType } from '../../api/todolists-api'
+import { todolistsAPI, TodolistType } from '../../../../api/todolists-api'
 import { Dispatch } from 'redux'
-import { RequestStatusType, appActions } from '../../app/app-slice'
-import { AppThunk } from '../../app/store';
+import { RequestStatusType, appActions } from '../../../../app/app-slice'
+import { AppThunk } from '../../../../app/store';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { authActions, login } from 'features/Login/auth-slice';
+import { authActions, login } from 'features/Login/model/auth-slice';
 import { createAsyncAppThunk } from 'common/instances/createAsyncAppThunk';
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError';
 

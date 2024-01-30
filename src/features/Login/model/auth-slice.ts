@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
-import { appActions, initializeApp } from '../../app/app-slice'
-import { handleServerAppError } from '../../common/utils/handleServerAppError'
+import { appActions, initializeApp } from '../../../app/app-slice'
+import { handleServerAppError } from '../../../common/utils/handleServerAppError'
 import { createSlice, isFulfilled, PayloadAction } from '@reduxjs/toolkit'
 import { LoginParamsType, authAPI } from 'api/login-api'
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError'

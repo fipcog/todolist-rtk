@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect } from 'react'
 import './App.css'
-import { TodolistsList } from '../features/TodolistsList/TodolistsList'
+import { TodolistsList } from '../features/TodolistsList/ui/TodolistsList'
 import { ErrorSnackbar } from '../common/components/ErrorSnackbar/ErrorSnackbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from './store'
 import { initializeApp, RequestStatusType } from './app-slice'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Login } from '../features/Login/Login'
-import { logout } from '../features/Login/auth-slice'
+import { Login } from '../features/Login/ui/Login'
+import { logout } from '../features/Login/model/auth-slice'
 import {
 	AppBar,
 	Button,

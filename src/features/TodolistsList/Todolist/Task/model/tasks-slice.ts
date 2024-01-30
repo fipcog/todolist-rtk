@@ -1,8 +1,8 @@
-import { todolistThunks } from './todolists-slice'
-import { TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType } from '../../api/todolists-api'
-import { handleServerAppError } from '../../common/utils/handleServerAppError'
+import { todolistThunks } from '../../model/todolists-slice'
+import { TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType } from '../../../../../api/todolists-api'
+import { handleServerAppError } from '../../../../../common/utils/handleServerAppError'
 import { createSlice } from '@reduxjs/toolkit'
-import { login } from 'features/Login/auth-slice'
+import { login } from 'features/Login/model/auth-slice'
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError'
 import { createAsyncAppThunk } from 'common/instances/createAsyncAppThunk'
 

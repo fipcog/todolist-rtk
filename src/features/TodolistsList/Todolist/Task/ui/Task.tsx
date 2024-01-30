@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useCallback } from 'react'
 import { Checkbox, IconButton } from '@mui/material'
-import { EditableSpan } from '../../../../common/components/EditableSpan/EditableSpan'
+import { EditableSpan } from '../../../../../common/components/EditableSpan/EditableSpan'
 import { Delete } from '@mui/icons-material'
-import { TaskStatuses, TaskType } from '../../../../api/todolists-api'
+import { TaskStatuses, TaskType } from '../../../../../api/todolists-api'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { tasksThunks } from 'features/TodolistsList/tasks-slice'
+import { tasksThunks } from 'features/TodolistsList/Todolist/Task/model/tasks-slice'
 
 type TaskPropsType = {
 	task: TaskType

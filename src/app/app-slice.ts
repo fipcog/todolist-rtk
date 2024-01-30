@@ -1,5 +1,5 @@
 import { AnyAction, Dispatch, UnknownAction } from 'redux'
-import { authActions } from '../features/Login/auth-slice'
+import { authActions } from '../features/Login/model/auth-slice'
 import { PayloadAction, createSlice, isAnyOf, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit'
 import { authAPI } from 'api/login-api'
 import { createAsyncAppThunk } from 'common/instances/createAsyncAppThunk'
